@@ -28,7 +28,7 @@ sh -c """
 ```
 1. Attach GDB.
 ```
-vagrant ssh
+vagrant ssh -- -L1234:127.0.0.1:1234
 arm-none-eabi-gdb
 set disassemble-next-line on
 target remote 127.0.0.1:1234
