@@ -1,0 +1,94 @@
+diff --git hw/arm/Makefile.objs hw/arm/Makefile.objs
+index f618c10a9..eff95f408 100644
+--- hw/arm/Makefile.objs
++++ hw/arm/Makefile.objs
+@@ -9,4 +9,4 @@ obj-$(CONFIG_DIGIC) += digic.o
+ obj-y += omap1.o omap2.o strongarm.o
+ obj-$(CONFIG_ALLWINNER_A10) += allwinner-a10.o cubieboard.o
+ 
+-obj-y += stm32.o stm32_rcc.o stm32_clktree.o stm32_p103.o stm32_maple.o stm32_adc.o stm32_dac.o stm32_iwdg.o stm32_f103c8.o stm32_crc.o stm32_dma.o
++obj-y += stm32.o stm32_rcc.o stm32_clktree.o stm32_p103.o stm32_maple.o stm32_adc.o stm32_dac.o stm32_iwdg.o stm32_f103c8.o stm32_crc.o stm32_dma.o stm32_f401re.o
+diff --git hw/arm/stm32_f401re.c hw/arm/stm32_f401re.c
+new file mode 100644
+index 000000000..dcf78d75d
+--- /dev/null
++++ hw/arm/stm32_f401re.c
+@@ -0,0 +1,78 @@
++/*
++ * STM32 F401RE
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of
++ * the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License along
++ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "hw/arm/stm32.h"
++#include "hw/sysbus.h"
++#include "hw/arm/arm.h"
++#include "hw/devices.h"
++#include "ui/console.h"
++#include "sysemu/sysemu.h"
++#include "hw/boards.h"
++
++
++static void stm32_f401re_init(MachineState *machine)
++{
++    const char* kernel_filename = machine->kernel_filename;
++
++    stm32_init(0x0007ffff, /* flash size. */
++               0x0001ffff, /* ram size. */
++               kernel_filename,
++               8000000,
++               32768);
++
++    DeviceState *gpio_a = DEVICE(object_resolve_path("/machine/stm32/gpio[a]", NULL));
++    DeviceState *gpio_b = DEVICE(object_resolve_path("/machine/stm32/gpio[b]", NULL));
++    DeviceState *gpio_c = DEVICE(object_resolve_path("/machine/stm32/gpio[c]", NULL));
++    DeviceState *gpio_d = DEVICE(object_resolve_path("/machine/stm32/gpio[d]", NULL));
++    DeviceState *gpio_e = DEVICE(object_resolve_path("/machine/stm32/gpio[e]", NULL));
++    // No support for GPIOH STM32 Qemu.
++    // DeviceState *gpio_e = DEVICE(object_resolve_path("/machine/stm32/gpio[e]", NULL));
++
++    DeviceState *uart1 = DEVICE(object_resolve_path("/machine/stm32/uart[1]", NULL));
++    DeviceState *uart2 = DEVICE(object_resolve_path("/machine/stm32/uart[2]", NULL));
++    // No support for USART 6 in STM32 Qemu.
++    // DeviceState *uart6 = DEVICE(object_resolve_path("/machine/stm32/uart[6]", NULL));
++
++    assert(gpio_a);
++    assert(gpio_b);
++    assert(gpio_c);
++    assert(gpio_d);
++    assert(gpio_e);
++    assert(uart1);
++    assert(uart2);
++
++    /* Connect RS232 to UART 1 */
++    stm32_uart_connect(
++            (Stm32Uart *)uart1,
++            serial_hds[0],
++            STM32_USART1_NO_REMAP
++    );
++ }
++
++static QEMUMachine stm32_f401re_machine = {
++    .name = "stm32-f401re",
++    .desc = "STM32f401re",
++    .init = stm32_f401re_init,
++};
++
++
++static void stm32_f401re_machine_init(void)
++{
++    qemu_register_machine(&stm32_f401re_machine);
++}
++
++machine_init(stm32_f401re_machine_init);

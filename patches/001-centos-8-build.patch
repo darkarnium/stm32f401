@@ -1,0 +1,46 @@
+diff --git linux-user/strace.c linux-user/strace.c
+index ea6c1d24e..9fc19dca0 100644
+--- linux-user/strace.c
++++ linux-user/strace.c
+@@ -5,6 +5,7 @@
+ #include <sys/shm.h>
+ #include <sys/select.h>
+ #include <sys/types.h>
++#include <sys/sysmacros.h>
+ #include <sys/mount.h>
+ #include <sys/mman.h>
+ #include <unistd.h>
+diff --git roms/seabios roms/seabios
+--- roms/seabios
++++ roms/seabios
+@@ -1 +1 @@
+-Subproject commit e51488c5f8800a52ac5c8da7a31b85cca5cc95d2
++Subproject commit e51488c5f8800a52ac5c8da7a31b85cca5cc95d2-dirty
+diff --git roms/vgabios roms/vgabios
+--- roms/vgabios
++++ roms/vgabios
+@@ -1 +1 @@
+-Subproject commit 19ea12c230ded95928ecaef0db47a82231c2e485
++Subproject commit 19ea12c230ded95928ecaef0db47a82231c2e485-dirty
+diff --git user-exec.c user-exec.c
+index 1ff8673ac..47a4b1f47 100644
+--- user-exec.c
++++ user-exec.c
+@@ -57,7 +57,7 @@ static void exception_action(CPUState *cpu)
+ void cpu_resume_from_signal(CPUState *cpu, void *puc)
+ {
+ #ifdef __linux__
+-    struct ucontext *uc = puc;
++    struct ucontext_t *uc = puc;
+ #elif defined(__OpenBSD__)
+     struct sigcontext *uc = puc;
+ #endif
+@@ -226,7 +226,7 @@ int cpu_signal_handler(int host_signum, void *pinfo,
+ #elif defined(__OpenBSD__)
+     struct sigcontext *uc = puc;
+ #else
+-    struct ucontext *uc = puc;
++    struct ucontext_t *uc = puc;
+ #endif
+ 
+     pc = PC_sig(uc);
