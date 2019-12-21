@@ -1,0 +1,12 @@
+diff --git linux-user/strace.c linux-user/strace.c
+index ea6c1d24e..9fc19dca0 100644
+--- linux-user/strace.c
++++ linux-user/strace.c
+@@ -5,6 +5,7 @@
+ #include <sys/shm.h>
+ #include <sys/select.h>
+ #include <sys/types.h>
++#include <sys/sysmacros.h>
+ #include <sys/mount.h>
+ #include <sys/mman.h>
+ #include <unistd.h>

@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
     curl -sLo /tmp/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2 \
       https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2019q4/RC2.1/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2
     tar -xjvf /tmp/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2 \
-      -C /opt/arm/
+      -C /opt/
 
     # Add to PATH for all users.
     echo 'export PATH=/opt/gcc-arm-none-eabi-9-2019-q4-major/bin:$PATH' > \
@@ -45,7 +45,9 @@ Vagrant.configure("2") do |config|
     git submodule update --recursive
 
     # Patch.
-    patch -p0 /opt/patches/*
+    for patch in /opt/patches/*.patch; do
+      patch -p0 < $patch
+    done
 
     # Build and install.
     CFLAGS="-Wno-error" ./configure \

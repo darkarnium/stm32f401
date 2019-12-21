@@ -1,2 +1,6 @@
 .vagrant/*
 *.log
+
+# Patches.
+*.orig
+*.rej
