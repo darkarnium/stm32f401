@@ -62,7 +62,7 @@ def create_string_literals(pattern=REGEX_CHARACTERS):
 
     Args:
         pattern (str): The regex to match against (default: REGEX_CHARACTERS)
-    
+
     Return:
         A list of addresses successfully marked as string literals.
     '''
@@ -77,7 +77,7 @@ def create_string_literals(pattern=REGEX_CHARACTERS):
         # defined by REGEX_CHARACTERS.
         if re.search(REGEX_CHARACTERS, str(string)):
             if create_strlit(string.ea, string.ea + string.length):
-                marked.add(string.ea)  
+                marked.add(string.ea)
 
     return marked
 
@@ -91,7 +91,7 @@ def get_literal_pools(s_addr, e_addr):
     Args:
         s_addr (int): The starting to start scanning at.
         e_addr (int): The address to stop scanning at.
-    
+
     Returns:
         A list of _potential_ literal pool addresses.
     '''
@@ -163,7 +163,7 @@ def get_ldr_psudo_instructions(s_addr, e_addr):
     Args:
         s_addr (int): The starting to start scanning at.
         e_addr (int): The address to stop scanning at.
-    
+
     Returns:
         A dictionary of LDR pseudo-immediate instructions. Keyed by address,
         with the address of the immediate as the value.
@@ -191,7 +191,7 @@ def set_t(addr, value=0x1):
     '''
     Set the T-bit to the provided value at the given address. Used to mark
     whether as section is Thumb or ARM.
-    
+
     Args:
         addr (int): The address to mark the T-bit at.
         value (int): The value to set the T-bit to (default: 0x1)
