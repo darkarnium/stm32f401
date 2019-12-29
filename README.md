@@ -1,12 +1,30 @@
 ```
-  _____ _______ __  __ ____ ___  ______ _  _        
- / ____|__   __|  \/  |___ \__ \|  ____| || |       
-| (___    | |  | \  / | __) | ) | |__  | || |___  __
- \___ \   | |  | |\/| ||__ < / /|  __| |__   _\ \/ /
- ____) |  | |  | |  | |___) / /_| |       | |  >  < 
-|_____/   |_|  |_|  |_|____/____|_|       |_| /_/\_\
-
+.|'''|  |''||''| '||\   /||` ,'''|,  ''|, '||''''|    /||   .''',  ||  
+||         ||     ||\\.//||      || '  ||  ||  .    // ||   |   | '||  
+`|'''|,    ||     ||     ||   '''||   .|'  ||''|   //..||.. |   |  ||  
+ .   ||    ||     ||     ||      ||  //    ||          ||   |   |  ||  
+ |...|'   .||.   .||     ||. '...|' ((... .||.         ||   `,,,' .||. 
+                                                                       
 ```
+
+### Overview
+
+This repository contains a number of helpers for attempting to reverse
+engineer devices using an STM32F401 microcontroller. Though these tools
+may work on other STM32 platforms, they have not been tested.
+
+The main components in this repository are intended to provide helpers for
+loading firmware dumps into IDA - assisting with patching up a few common
+issues to assist with getting initial auto-analysis working. In addition,
+this repository contains a `Vagrantfile` which will provision a CentOS 8
+virtual machine with a patched version of beckus' STM32 `qemu` fork in order
+to provide a virtual platform in which dynamic analysis can be performed.
+
+As below, this is tested and confirmed working for a device which uses an
+STM32F401 - though there are some issues currently, as the patch does not
+completely emulate the device.
+
+![STM32F4x](./docs/images/gdb-attach.png?raw=true)
 
 ### Script Usage
 
@@ -20,6 +38,17 @@ with the following:
   * Ensure code sections following literal pools are marked as such.
   * Ensure Strings identified by IDA are marked as string literals.
   * Ensure data references are created for all LDR operations against strings.
+
+In order to use these scripts, perform the following:
+
+1. Load the dumped binary into IDA as a 'binary file', with the processor set
+to ARM.
+1. Set the appropriate RAM and ROM sections marked when prompted.
+1. Run the script(s) via 'Run script' from the 'File' menu.
+1. Wait for the script to complete - which may take some time.
+
+Once complete, a summary of the script operations should be printed to the
+output window.
 
 ### VM Usage
 
@@ -59,8 +88,8 @@ sh -c """
 ```
 4. Attach GDB.
 ```
-vagrant ssh -- -L1234:127.0.0.1:1234
-arm-none-eabi-gdb
+vagrant ssh -- -L1234:127.0.0.1:1234  # If required.
+arm-none-eabi-gdb -q
 set disassemble-next-line on
 target remote 127.0.0.1:1234
 
