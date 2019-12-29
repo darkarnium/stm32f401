@@ -11,7 +11,7 @@
 
 This repository contains a number of helpers for attempting to reverse
 engineer devices using an STM32F401 microcontroller. Though these tools
-may work on other STM32 platforms, they have not been tested.
+may work on other STM32 platforms they have not been tested.
 
 The main components in this repository are intended to provide helpers for
 loading firmware dumps into IDA - assisting with patching up a few common
@@ -24,7 +24,7 @@ As below, this is tested and confirmed working for a device which uses an
 STM32F401 - though there are some issues currently, as the patch does not
 completely emulate the device.
 
-![STM32F4x](./docs/images/gdb-attach.png?raw=true)
+![STM32F401](./docs/images/gdb-attach.png?raw=true)
 
 ### Script Usage
 

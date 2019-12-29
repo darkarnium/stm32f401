@@ -1,13 +1,5 @@
 '''
-  _____ _______ __  __ ____ ___  ______ _  _        
- / ____|__   __|  \/  |___ \__ \|  ____| || |       
-| (___    | |  | \  / | __) | ) | |__  | || |___  __
- \___ \   | |  | |\/| ||__ < / /|  __| |__   _\ \/ /
- ____) |  | |  | |  | |___) / /_| |       | |  >  < 
-|_____/   |_|  |_|  |_|____/____|_|       |_| /_/\_\
-
-
-Performs operations to load STM32F4x firmware into IDA, including:
+Performs operations to load STM32F401 firmware into IDA, including:
 
   * Getting the reset vector, and initial stack pointer.
   * Setting the T-bit appropriately.

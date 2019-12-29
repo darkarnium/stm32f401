@@ -1,5 +1,6 @@
 .vagrant/*
 *.log
+.DS_Store
 
 # Patches.
 *.orig
