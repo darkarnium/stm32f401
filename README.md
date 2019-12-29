@@ -92,7 +92,6 @@ vagrant ssh -- -L1234:127.0.0.1:1234  # If required.
 arm-none-eabi-gdb -q
 set disassemble-next-line on
 target remote 127.0.0.1:1234
-
 ```
 
 ### References
