@@ -1,4 +1,12 @@
 '''
+  _____ _______ __  __ ____ ___  ______ _  _        
+ / ____|__   __|  \/  |___ \__ \|  ____| || |       
+| (___    | |  | \  / | __) | ) | |__  | || |___  __
+ \___ \   | |  | |\/| ||__ < / /|  __| |__   _\ \/ /
+ ____) |  | |  | |  | |___) / /_| |       | |  >  < 
+|_____/   |_|  |_|  |_|____/____|_|       |_| /_/\_\
+
+
 Performs operations to load STM32F4x firmware into IDA, including:
 
   * Getting the reset vector, and initial stack pointer.
@@ -220,6 +228,12 @@ ida_auto.auto_wait()
 
 # Prepend 'reset_' to the name of the function at the reset vector address.
 reset_name = get_func_name(reset_addr)
+print(
+    '[-] Changing name of reset handler at 0x{0:0x} to {1}'.format(
+        reset_addr,
+        reset_name,
+    )
+)
 if reset_name.startswith('sub_'):
     set_name(reset_addr, reset_name.replace('sub_', 'reset_'))
 
