@@ -57,7 +57,7 @@ CentOS 8 VM, and compile `qemu` with support for an STM32F401. This is
 powered by a slightly tweaked version of the the amazing work already
 done by beckus' STM32 qemu fork:
 
-* https://github.com/beckus/qemu_stm32.git.
+* https://github.com/beckus/qemu_stm32.git
 
 In order to use this VM, you will need Vagrant and an appropriate hypervisor
 installed - such as Virtualbox, or VMWare.
@@ -94,3 +94,8 @@ set disassemble-next-line on
 target remote 127.0.0.1:1234
 
 ```
+
+### References
+
+* [ST STM32F401RE Documentation](https://www.st.com/en/microcontrollers-microprocessors/stm32f401re.html)
+* [Beckus' qemu_stm32](https://github.com/beckus/qemu_stm32.git)
